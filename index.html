@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="个人摄影作品展示网站，分享自然风光和城市摄影">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <title>David Tao的生活记录</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/exifreader@4.14.0/dist/exif-reader.js"></script>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div class="logo">一些游客照</div>
+            <ul class="nav-links">
+                <li><a href="#home">首页</a></li>
+                <li><a href="#gallery">作品集</a></li>
+                <li><a href="#about">关于我</a></li>
+                <li><a href="#contact">联系方式</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="carousel">
+        <div class="carousel-container">
+            <div class="carousel-slide active">
+                <img src="images/carousel-1.jpg" alt="摄影作品 1">
+                <div class="carousel-caption">
+                    <h2>探索光影的艺术</h2>
+                    <p>通过镜头捕捉世界的美好瞬间</p>
+                </div>
+            </div>
+            <div class="carousel-slide">
+                <img src="images/carousel-2.jpg" alt="摄影作品 2">
+                <div class="carousel-caption">
+                    <h2>自然之美</h2>
+                    <p>大自然的壮丽景色</p>
+                </div>
+            </div>
+            <div class="carousel-slide">
+                <img src="images/carousel-3.jpg" alt="摄影作品 3">
+                <div class="carousel-caption">
+                    <h2>城市印象</h2>
+                    <p>都市中的独特视角</p>
+                </div>
+            </div>
+            <button class="carousel-btn prev">&lt;</button>
+            <button class="carousel-btn next">&gt;</button>
+        </div>
+    </section>
+    
+    <!-- 品牌图片轮播 - 类似 Brandi Toole Photo -->
+    <section class="brand-carousel">
+        <div class="brand-carousel-container">
+            <!-- 这里将由JavaScript动态填充图片 -->
+        </div>
+        <button class="brand-carousel-btn prev">&lt;</button>
+        <button class="brand-carousel-btn next">&gt;</button>
+    </section>
+
+    <section id="gallery">
+        <div class="gallery-container">
+            <!-- 在JavaScript中动态填充照片 -->
+        </div>
+    </section>
+
+    <!-- 竖屏照片展示区 -->
+    <section class="vertical-photos">
+        <div class="vertical-photos-container">
+            <!-- 这里将由JavaScript动态填充图片 -->
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 我的摄影作品集. 保留所有权利.</p>
+    </footer>
+
+    <!-- 模态框 - 增强EXIF信息显示 -->
+    <div class="modal" style="display: none;">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="modal-image">
+        <div class="exif-info"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

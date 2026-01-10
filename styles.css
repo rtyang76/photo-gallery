@@ -1,0 +1,506 @@
+/* 全局样式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #fff;
+}
+
+a {
+    text-decoration: none;
+    color: #333;
+}
+
+/* 导航栏 */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 5%;
+    background-color: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+}
+
+.nav-links li {
+    margin-left: 30px;
+}
+
+.nav-links a {
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover {
+    color: #666;
+}
+
+/* 轮播图 */
+#carousel {
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+}
+
+.carousel-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+/* 轮播图样式 */
+.carousel-slide {
+    display: none;
+}
+.carousel-slide.active {
+    display: block;
+}
+
+/* 瀑布流样式 */
+.gallery-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-auto-rows: 10px;
+    gap: 15px;
+}
+.gallery-item {
+    overflow: hidden;
+}
+.gallery-item img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+.carousel-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.carousel-slide.active {
+    opacity: 1;
+}
+
+.carousel-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.carousel-caption {
+    position: absolute;
+    bottom: 20%;
+    left: 10%;
+    color: white;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+    max-width: 60%;
+}
+
+.carousel-caption h2 {
+    font-size: 3rem;
+    margin-bottom: 15px;
+}
+
+.carousel-caption p {
+    font-size: 1.2rem;
+}
+
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.4);
+    border: none;
+    color: white;
+    font-size: 2rem;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.3s;
+    z-index: 2;
+}
+
+.carousel-btn:hover {
+    background: rgba(255, 255, 255, 0.7);
+}
+
+.carousel-btn.prev {
+    left: 20px;
+}
+
+.carousel-btn.next {
+    right: 20px;
+}
+
+/* 图片瀑布流 */
+#gallery {
+    padding: 60px 5%;
+    background-color: white;
+    column-count: 3; /* 3列布局 */
+    column-gap: 15px;
+}
+
+.gallery-container {
+    display: block; /* 移除grid布局 */
+    width: 100%;
+}
+
+.gallery-item {
+    break-inside: avoid; /* 防止图片被分割到不同列 */
+    margin-bottom: 15px;
+    position: relative;
+    width: 100%;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: auto; /* 高度自适应 */
+    display: block;
+    border-radius: 4px;
+    transition: transform 0.3s ease;
+}
+
+.gallery-item:hover img {
+    transform: scale(1.02);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    #gallery {
+        column-count: 2; /* 小屏幕改为2列 */
+    }
+}
+
+@media (max-width: 480px) {
+    #gallery {
+        column-count: 1; /* 更小屏幕改为1列 */
+    }
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* 页脚 */
+footer {
+    text-align: center;
+    padding: 20px 0;
+    background-color: #f9f9f9;
+    margin-top: 40px;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .carousel-caption h2 {
+        font-size: 2rem;
+    }
+    
+    .carousel-caption p {
+        font-size: 1rem;
+    }
+    
+    .gallery-container {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
+    
+    .nav-links {
+        display: none;
+    }
+}
+
+/* 模态框样式 */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1001;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.9);
+    overflow: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    margin: auto;
+    display: block;
+    max-width: 80vw;
+    max-height: 90vh;
+    object-fit: contain;
+    cursor: zoom-in;
+    transition: transform 0.1s ease;
+    touch-action: none; /* 防止触摸屏上的默认行为 */
+}
+
+.modal-content.grabbing {
+    cursor: grabbing;
+}
+
+.close {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: white;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 1002;
+}
+
+.close:hover {
+    color: #ccc;
+}
+
+.modal .exif-info {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.95);
+    color: #333;
+    padding: 15px;
+    border-radius: 8px;
+    font-size: 13px;
+    width: 220px;
+    line-height: 1.6;
+    z-index: 1002;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    display: block;
+}
+
+.modal .exif-info p {
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    padding-bottom: 4px;
+    font-size: 12px;
+}
+
+.modal .exif-info p:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.modal .exif-info p span.label {
+    font-weight: bold;
+    color: #555;
+}
+
+.modal .exif-info p span.value {
+    color: #000;
+    text-align: right;
+    max-width: 55%;
+    font-weight: 500;
+}
+
+/* 缩放比例指示器 */
+.zoom-indicator {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: bold;
+    z-index: 1003;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+/* 品牌图片轮播 - 类似 Brandi Toole Photo */
+.brand-carousel {
+    padding: 40px 5%;
+    background-color: #f8f8f8;
+    position: relative;
+    overflow: hidden;
+}
+
+.brand-carousel-container {
+    display: flex;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+    gap: 15px;
+    padding: 10px 0;
+}
+
+.brand-carousel-container::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
+
+.brand-slide {
+    flex: 0 0 auto;
+    height: 350px;
+    position: relative;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.brand-slide.active {
+    opacity: 1;
+    transform: translateY(0);
+    transition: transform 0.6s ease, opacity 0.8s ease;
+}
+
+.brand-slide:hover {
+    transform: translateY(-5px);
+}
+
+.brand-slide img {
+    height: 100%;
+    width: auto;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.brand-slide:hover img {
+    transform: scale(1.05);
+}
+
+/* Gallery Item Animation */
+.gallery-item {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.gallery-item.active {
+    opacity: 1;
+    transform: translateY(0);
+    transition: transform 0.6s ease, opacity 0.8s ease;
+}
+
+.brand-carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.8);
+    border: none;
+    color: #333;
+    font-size: 1.5rem;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.brand-carousel-btn:hover {
+    background: rgba(255, 255, 255, 1);
+}
+
+.brand-carousel-btn.prev {
+    left: 20px;
+}
+
+.brand-carousel-btn.next {
+    right: 20px;
+}
+
+/* 竖屏照片展示区 */
+.vertical-photos {
+    padding: 60px 5%;
+    background-color: #fff;
+}
+
+.vertical-photos-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.vertical-photo {
+    flex: 1;
+    height: 500px;
+    overflow: hidden;
+    border-radius: 5px;
+    position: relative;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    opacity: 0.7;
+    transform: translateY(30px);
+    transition: transform 0.6s ease, opacity 0.6s ease;
+}
+
+.vertical-photo.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.vertical-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.vertical-photo:hover img {
+    transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+    .vertical-photos-container {
+        flex-wrap: wrap;
+    }
+    
+    .vertical-photo {
+        flex: 0 0 calc(50% - 10px);
+        margin-bottom: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .vertical-photo {
+        flex: 0 0 100%;
+    }
+}
