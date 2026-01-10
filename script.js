@@ -43,12 +43,13 @@ document.addEventListener('DOMContentLoaded', () => {
         resetInterval();
     });
     
-    // 示例图片数据 - 使用x张不同照片
+    // 示例图片数据 - 使用缩略图展示，点击时加载原图
     const photos = Array.from({length: 50}, (_, i) => {
+        const photoName = `photo-${i+1}`;
         return {
-            src: `images/photo-${i+1}.jpg`,
+            thumbnail: `image_thumbnail/${photoName}_thumbnail.jpg`, // 缩略图路径
+            src: `images/${photoName}.jpg`, // 原图路径
             alt: `摄影作品 ${i+1}`,
-            // 不再预设高度，由图片自身比例决定
         };
     });
 
@@ -306,13 +307,14 @@ document.addEventListener('DOMContentLoaded', () => {
             item.className = 'gallery-item';
             
             const img = document.createElement('img');
-            img.src = photo.src;
+            img.src = photo.thumbnail; // 显示缩略图
             img.alt = photo.alt;
             img.loading = "lazy";
+            img.dataset.fullsize = photo.src; // 存储原图路径
             
-            // 图片点击事件 - 显示大图和EXIF信息
+            // 图片点击事件 - 显示原图和EXIF信息
             img.addEventListener('click', function() {
-                handleImageClick(this.src);
+                handleImageClick(this.dataset.fullsize); // 使用原图路径
             });
             
             item.appendChild(img);
@@ -358,10 +360,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const brandPrevBtn = document.querySelector('.brand-carousel-btn.prev');
         const brandNextBtn = document.querySelector('.brand-carousel-btn.next');
         
-        // 示例品牌轮播图图片
+        // 品牌轮播图图片 - 使用缩略图
         const brandSlides = Array.from({length: 10}, (_, i) => {
+            const brandName = `brand-${i+1}`;
             return {
-                src: `images/brand-${i+1}.jpg`,
+                thumbnail: `image_thumbnail/${brandName}_thumbnail.jpg`, // 缩略图
+                src: `images/${brandName}.jpg`, // 原图
                 alt: `品牌展示 ${i+1}`
             };
         });
@@ -372,13 +376,14 @@ document.addEventListener('DOMContentLoaded', () => {
             slideDiv.className = 'brand-slide';
             
             const img = document.createElement('img');
-            img.src = slide.src;
+            img.src = slide.thumbnail; // 显示缩略图
             img.alt = slide.alt;
             img.loading = "lazy";
+            img.dataset.fullsize = slide.src; // 存储原图路径
             
             // 添加点击查看大图功能
             img.addEventListener('click', function() {
-                handleImageClick(this.src);
+                handleImageClick(this.dataset.fullsize); // 使用原图路径
             });
             
             // 根据图片加载后的自然宽高比动态调整宽度
@@ -407,7 +412,7 @@ document.addEventListener('DOMContentLoaded', () => {
         brandCarouselContainer.querySelectorAll('.brand-slide img').forEach(img => {
             if (!img.hasClickEvent) {
                 img.addEventListener('click', function() {
-                    handleImageClick(this.src);
+                    handleImageClick(this.dataset.fullsize); // 使用原图路径
                 });
                 img.hasClickEvent = true;
             }
@@ -462,10 +467,12 @@ document.addEventListener('DOMContentLoaded', () => {
     function initVerticalPhotos() {
         const verticalPhotosContainer = document.querySelector('.vertical-photos-container');
         
-        // 示例竖屏照片
+        // 竖屏照片 - 使用缩略图
         const verticalPhotos = Array.from({length: 4}, (_, i) => {
+            const verticalName = `vertical-${i+1}`;
             return {
-                src: `images/vertical-${i+1}.jpg`,
+                thumbnail: `image_thumbnail/${verticalName}_thumbnail.jpg`, // 缩略图
+                src: `images/${verticalName}.jpg`, // 原图
                 alt: `竖屏照片 ${i+1}`
             };
         });
@@ -476,13 +483,14 @@ document.addEventListener('DOMContentLoaded', () => {
             photoDiv.className = 'vertical-photo';
             
             const img = document.createElement('img');
-            img.src = photo.src;
+            img.src = photo.thumbnail; // 显示缩略图
             img.alt = photo.alt;
             img.loading = "lazy";
+            img.dataset.fullsize = photo.src; // 存储原图路径
             
             // 添加点击查看大图功能
             img.addEventListener('click', function() {
-                handleImageClick(this.src);
+                handleImageClick(this.dataset.fullsize); // 使用原图路径
             });
             
             photoDiv.appendChild(img);
