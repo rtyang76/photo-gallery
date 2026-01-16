@@ -308,20 +308,41 @@ document.addEventListener('DOMContentLoaded', () => {
                 imgY = startImgY + deltaY;
                 updateTransform();
             } else if (e.touches.length === 2) {
-                // 双指缩放
+                // 双指缩放 - 使用线性缩放
                 e.preventDefault();
                 const dx = e.touches[0].clientX - e.touches[1].clientX;
                 const dy = e.touches[0].clientY - e.touches[1].clientY;
                 const distance = Math.sqrt(dx * dx + dy * dy);
                 
                 if (lastTouchDistance > 0) {
-                    const scaleChange = distance / lastTouchDistance;
+                    // 计算距离变化
+                    const distanceChange = distance - lastTouchDistance;
                     const oldScale = scale;
-                    scale = Math.min(Math.max(1, scale * scaleChange), 4);
+                    
+                    // 线性缩放：距离变化直接映射到缩放变化
+                    const touchZoomSpeed = 0.005; // 触摸缩放速度
+                    scale += distanceChange * touchZoomSpeed;
+                    scale = Math.min(Math.max(1, scale), 4);
                     
                     if (scale <= 1) {
+                        scale = 1;
                         imgX = 0;
                         imgY = 0;
+                    } else if (oldScale !== scale && oldScale > 0) {
+                        // 以双指中心为缩放中心
+                        const centerX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+                        const centerY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+                        
+                        const rect = modalImg.getBoundingClientRect();
+                        const imgCenterX = rect.left + rect.width / 2;
+                        const imgCenterY = rect.top + rect.height / 2;
+                        
+                        const offsetX = centerX - imgCenterX;
+                        const offsetY = centerY - imgCenterY;
+                        
+                        const scaleRatio = scale / oldScale;
+                        imgX = imgX - offsetX * (scaleRatio - 1);
+                        imgY = imgY - offsetY * (scaleRatio - 1);
                     }
                     
                     updateTransform();
@@ -362,25 +383,29 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     
-        // 添加滚轮缩放功能 - 以鼠标位置为中心缩放
+        // 添加滚轮缩放功能 - 线性缩放，以鼠标位置为中心
         modal.addEventListener('wheel', (e) => {
             e.preventDefault();
-            const delta = -e.deltaY;
+            
             const oldScale = scale;
             
-            // 计算新的缩放比例
-            if (delta > 0) {
-                scale *= 1.03;
-            } else {
-                scale *= 0.97;
-            }
-            scale = Math.min(Math.max(1, scale), 4); // 限制缩放范围，最小为1
+            // 线性增量缩放 - 根据滚轮的deltaY计算缩放增量
+            // 使用更小的系数让缩放更平滑
+            const zoomSpeed = 0.001; // 缩放速度系数
+            const delta = -e.deltaY;
+            
+            // 线性增加/减少缩放比例
+            scale += delta * zoomSpeed;
+            
+            // 限制缩放范围
+            scale = Math.min(Math.max(1, scale), 4);
             
             // 如果缩放到1，重置位置
             if (scale <= 1) {
+                scale = 1;
                 imgX = 0;
                 imgY = 0;
-            } else if (oldScale !== scale) {
+            } else if (oldScale !== scale && oldScale > 0) {
                 // 以鼠标位置为中心进行缩放
                 const rect = modalImg.getBoundingClientRect();
                 const imgCenterX = rect.left + rect.width / 2;
@@ -400,7 +425,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             updateTransform();
             updateZoomIndicator();
-        });
+        }, { passive: false });
 
         // 关闭模态框
         if (closeBtn) {
