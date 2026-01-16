@@ -58,6 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalImg = document.getElementById('modal-image');
     const exifInfoDiv = document.querySelector('.exif-info');
     const closeBtn = document.querySelector('.close');
+    const exifToggleBtn = document.querySelector('.exif-toggle-btn');
 
     // 全局图片缩放和拖拽状态
     let scale = 1;
@@ -67,6 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const dragSensitivity = 0.5;
     let clickTimer = null;
     let mouseDownTime = 0;
+    let exifVisible = false;
 
     // 更新transform样式
     function updateTransform() {
@@ -94,10 +96,11 @@ document.addEventListener('DOMContentLoaded', () => {
         // 重置模态框状态
         scale = 1;
         translate = { x: 0, y: 0 };
+        exifVisible = false;
         
-        // 清空并显示EXIF面板
+        // 隐藏EXIF面板
+        exifInfoDiv.classList.remove('show');
         exifInfoDiv.innerHTML = '<p><span class="label">加载中...</span></p>';
-        exifInfoDiv.style.display = 'block';
         
         // 显示模态框和图片
         modal.style.display = 'flex';
@@ -172,6 +175,35 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 初始化模态框交互
     function initModalInteractions() {
+        // EXIF信息显示/隐藏按钮
+        if (exifToggleBtn) {
+            exifToggleBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                exifVisible = !exifVisible;
+                if (exifVisible) {
+                    exifInfoDiv.classList.add('show');
+                } else {
+                    exifInfoDiv.classList.remove('show');
+                }
+            });
+        }
+        
+        // 移动端：点击EXIF面板的关闭按钮（伪元素区域）
+        if (exifInfoDiv) {
+            exifInfoDiv.addEventListener('click', (e) => {
+                // 检查是否点击在右上角关闭按钮区域
+                const rect = exifInfoDiv.getBoundingClientRect();
+                const clickX = e.clientX - rect.left;
+                const clickY = e.clientY - rect.top;
+                
+                // 右上角30x30区域
+                if (window.innerWidth <= 768 && clickX > rect.width - 45 && clickY < 40) {
+                    exifVisible = false;
+                    exifInfoDiv.classList.remove('show');
+                }
+            });
+        }
+        
         // 修改后的拖拽开始逻辑
         modalImg.addEventListener('mousedown', (e) => {
             if (scale <= 1) return;
@@ -280,6 +312,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     modal.style.display = "none";
                     scale = 1;
                     translate = { x: 0, y: 0 };
+                    exifVisible = false;
+                    exifInfoDiv.classList.remove('show');
                 }
             });
         }
@@ -290,6 +324,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 modal.style.display = "none";
                 scale = 1;
                 translate = { x: 0, y: 0 };
+                exifVisible = false;
+                exifInfoDiv.classList.remove('show');
             }
         });
     }
