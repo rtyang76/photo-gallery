@@ -267,8 +267,12 @@ footer {
     max-height: 90vh;
     object-fit: contain;
     cursor: zoom-in;
-    transition: transform 0.1s ease;
-    touch-action: none; /* 防止触摸屏上的默认行为 */
+    transition: none;
+    touch-action: none;
+    transform-origin: center center;
+    will-change: transform;
+    user-select: none;
+    -webkit-user-drag: none;
 }
 
 .modal-content.grabbing {
